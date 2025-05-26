@@ -1,0 +1,45 @@
+# ======================
+# Global ignores
+# ======================
+.DS_Store
+Thumbs.db
+
+# ======================
+# IDEs
+# ======================
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+
+# ======================
+# Gradle
+# ======================
+.gradle/
+build/
+!**/src/main/**/build/         # 예외 처리 원하면 이렇게 (선택)
+!**/src/test/**/build/
+*.properties
+*.yml
+
+# Wrapper
+gradle/wrapper/gradle-wrapper.properties
+gradle/wrapper/gradle-wrapper.jar
+
+# ======================
+# Kotlin / Java
+# ======================
+*.class
+*.jar
+*.war
+*.ear
+*.log
+
+# ======================
+# OS-specific
+# ======================
+ehthumbs.db
+Icon?
+.Spotlight-V100
+.Trashes
