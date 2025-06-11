@@ -1,0 +1,14 @@
+### 기본 버전
+GET http://localhost:8080/v2/validates/1?username=Hello&password=world
+
+### password 없는 버전
+GET http://localhost:8080/v2/validates/1?username=Hello
+
+### username, password 둘 다 없는 버전
+GET http://localhost:8080/v2/validates/1
+
+### Service Validation 테스트 1
+GET http://localhost:8080/v2/validates/3
+
+### Service Validation 테스트 2
+GET http://localhost:8080/v2/validates/3?isNg=false

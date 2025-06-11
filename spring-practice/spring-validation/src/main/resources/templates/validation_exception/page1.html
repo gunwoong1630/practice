@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .error-msg {
+            border-color: red;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+  <div>
+    <h1>
+      데이터 송신 테스트
+    </h1>
+  </div>
+  <form method="POST" th:object="${htmlForm}">
+
+      <div>
+        <label for="text">Text: </label>
+<!--        <input id="text" type="text" name="text">-->
+        <input id="text" type="text" th:field="*{text}" th:errorclass="error-msg">
+        <div th:errors="*{text}" th:errorclass="error-msg" ></div>
+      </div>
+
+      <div>
+        <label for="email">Email: </label>
+<!--        <input id="email" type="text" name="email">-->
+        <input id="email" type="text" th:field="*{email}" th:errorclass="error-msg">
+          <div th:errors="*{email}" th:errorclass="error-msg"></div>
+
+      </div>
+
+      <div>
+        <label for="phone">Phone: </label>
+<!--        <input id="phone" type="text" name="phone">-->
+        <input id="phone" type="text" th:field="*{phone}" th:errorclass="error-msg">
+          <div th:errors="*{phone}" th:errorclass="error-msg"></div>
+      </div>
+
+      <div>
+        <label for="local-date">Date: </label>
+<!--        <input id="local-date" type="date" name="localDate">-->
+        <input id="local-date" type="date" th:field="*{localDate}" th:errorclass="error-msg">
+          <div th:errors="*{localDate}" th:errorclass="error-msg"></div>
+      </div>
+
+      <div>
+        <button>제출</button>
+      </div>
+  </form>
+</body>
+</html>
