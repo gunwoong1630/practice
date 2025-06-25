@@ -1,5 +1,7 @@
 package com.velogexport.nicesqlpractice.statement;
 
+import static com.velogexport.nicesqlpractice.statement.JdbcProperty.*;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -25,22 +27,18 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UseStatementByJDBCApplication {
 	public static void main(String[] args) {
-		String jdbcUrl = "jdbc:mysql://localhost:3306/nice_db";
-		String username = "";
-		String password = "";
-
-		activateStatement(jdbcUrl, username, password);
-		activatePreparedStatement(jdbcUrl, username, password);
+		Car.createTable();
+		activateStatement();
+		activatePreparedStatement();
 	}
 
-	public static void activateStatement(String jdbcUrl, String username, String password) {
-		Connection connection = null;
+	public static void activateStatement() {
+		Connection connection = getConnection();
 		Statement statement = null;
 		ResultSet resultSet = null;
 
 		try {
 			log.info("activateStatement");
-			connection = DriverManager.getConnection(jdbcUrl, username, password);
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery("SELECT * FROM car WHERE car_id = 1");
 			while (resultSet.next()) {
@@ -61,14 +59,14 @@ public class UseStatementByJDBCApplication {
 		}
 	}
 
-	public static void activatePreparedStatement(String jdbcUrl, String username, String password) {
+	public static void activatePreparedStatement() {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 
 		try {
 			log.info("activatePreparedStatement");
-			connection = DriverManager.getConnection(jdbcUrl, username, password);
+			connection = getConnection();
 			preparedStatement = connection.prepareStatement("SELECT * FROM car WHERE car_id = ?");
 			preparedStatement.setLong(1, 1L);
 			resultSet = preparedStatement.executeQuery();
@@ -95,6 +93,25 @@ public class UseStatementByJDBCApplication {
 	}
 
 	private record Car(Long id, String brand, String name, String type) {
+		public static void createTable() {
+			String createTableSQL = """
+				CREATE TABLE IF NOT EXISTS car (
+				    car_id BIGINT PRIMARY KEY,
+				    brand VARCHAR(50),
+				    name VARCHAR(50),
+				    type VARCHAR(50)
+				)
+				""";
 
+			try (Connection connection = getConnection();
+				 Statement statement = connection.createStatement()) {
+
+				statement.executeUpdate(createTableSQL);
+				log.info("Table 'car' created or already exists.");
+
+			} catch (SQLException e) {
+				log.error("Failed to create table 'car': " + e.getMessage(), e);
+			}
+		}
 	}
 }
